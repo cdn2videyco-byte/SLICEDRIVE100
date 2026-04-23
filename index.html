@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{margin:0;background:#000}
+#wrap{position:fixed;inset:0;background:#000}
+video{width:100%;height:100%;object-fit:cover}
+
+#tapLayer{
+  position:absolute;
+  inset:0;
+  z-index:2;
+}
+
+#bar{
+  position:absolute;
+  left:0;right:0;bottom:0;
+  padding:10px;
+  background:linear-gradient(to top,rgba(0,0,0,.6),transparent);
+  color:#fff;
+  font-size:14px;
+  pointer-events:none;
+  z-index:3;
+}
+
+#progress{height:5px;background:rgba(255,255,255,.3)}
+#fill{height:100%;width:0;background:#fff}
+</style>
+</head>
+
+<body>
+
+<div id="wrap">
+
+  <video 
+    id="v"
+    src="https://cdn2.slicedrive.com/UQsmrnP41.mp4"
+    playsinline>
+  </video>
+
+  <div id="tapLayer"></div>
+
+  <div id="bar">
+    <div id="progress"><div id="fill"></div></div>
+  </div>
+
+</div>
+
+<script>
+let first=0, skip30=0;
+const ad="https://omg10.com/4/10426491";
+const v=document.getElementById("v");
+const fill=document.getElementById("fill");
+const tap=document.getElementById("tapLayer");
+
+tap.onclick=()=>{
+  if(!first){
+    first=1;
+    window.open(ad,"_blank");
+  }
+  v.play();
+};
+
+v.ontimeupdate=()=>{
+  if(v.duration){
+    fill.style.width=(v.currentTime/v.duration*100)+"%";
+  }
+
+  if(!skip30 && v.currentTime>=30){
+    skip30=1;
+    window.location.href=ad;
+  }
+};
+</script>
+
+</body>
+</html>
